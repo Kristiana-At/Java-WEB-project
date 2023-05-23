@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -22,4 +23,8 @@ public class Transaction {
 
     @OneToOne
     private Card receiver;
+
+    private String note;
+
+    private LocalDateTime date;
 }
