@@ -32,4 +32,11 @@ public class CardOwner {
     private String username;
 
     private String password;
+
+    public CardOwner(String name, Integer age, String username, String password) {
+        this.name = name;
+        this.age = age;
+        this.username = username;
+        this.password = password;
+    }
 }
