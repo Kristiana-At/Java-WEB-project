@@ -2,7 +2,6 @@ package com.example.JavaWEBbff.controllers;
 
 import com.example.JavaWEBbff.models.CardOwner;
 import com.example.JavaWEBbff.models.resources.CreateCardOwnerDto;
-import com.example.JavaWEBbff.models.resources.LoginDto;
 import com.example.JavaWEBbff.services.CardOwnerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,8 @@ public class CardOwnerController {
     }
 
     @GetMapping("/login")
-    public CardOwner login(@RequestBody LoginDto loginData){
-        return this.cardOwnerService.login(loginData.getUsername(), loginData.getPassword());
+    public CardOwner login(@RequestParam String username,  @RequestParam String password){
+        return this.cardOwnerService.login(username, password);
     }
 
     @PostMapping("/create")

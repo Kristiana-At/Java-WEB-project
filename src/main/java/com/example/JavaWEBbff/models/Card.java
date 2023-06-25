@@ -1,6 +1,7 @@
 package com.example.JavaWEBbff.models;
 
 import com.example.JavaWEBbff.models.enums.CardType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Card {
     private CardType cardType;
 
     @ManyToOne
+    @JsonIgnore
     private CardOwner cardOwner;
 
     public Card(CardType cardType, CardOwner cardOwner) {
