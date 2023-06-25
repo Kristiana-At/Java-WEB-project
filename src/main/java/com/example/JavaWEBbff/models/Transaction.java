@@ -1,5 +1,6 @@
 package com.example.JavaWEBbff.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +19,25 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
+    @JsonIgnore
     private Card sender;
 
-    @OneToOne
+    @ManyToOne
+    @JsonIgnore
     private Card receiver;
+
+    private double money;
 
     private String note;
 
     private LocalDateTime date;
+
+    public Transaction(Card cardFrom, Card cardTo, double money, String note, LocalDateTime date) {
+        this.sender = cardFrom;
+        this.receiver = cardTo;
+        this.money = money;
+        this.note = note;
+        this.date = date;
+    }
 }

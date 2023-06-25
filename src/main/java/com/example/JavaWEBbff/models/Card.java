@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Random;
 
 @Entity
@@ -29,6 +30,15 @@ public class Card {
     @ManyToOne
     @JsonIgnore
     private CardOwner cardOwner;
+
+    @OneToMany(mappedBy = "card")
+    List<Money> money;
+
+    @OneToMany(mappedBy = "sender")
+    List<Transaction> sendTrn;
+
+    @OneToMany(mappedBy = "receiver")
+    List<Transaction> receiveTrn;
 
     public Card(CardType cardType, CardOwner cardOwner) {
         this.cardType = cardType;
