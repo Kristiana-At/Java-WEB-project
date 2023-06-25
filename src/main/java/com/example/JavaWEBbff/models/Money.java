@@ -1,6 +1,7 @@
 package com.example.JavaWEBbff.models;
 
 import com.example.JavaWEBbff.models.enums.Currency;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,8 @@ public class Money {
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
-    @OneToOne
+    @ManyToOne
+    @JsonIgnore
     private Card card;
 
     public Money(){
