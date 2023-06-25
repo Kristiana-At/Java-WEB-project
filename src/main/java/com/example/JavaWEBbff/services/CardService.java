@@ -78,4 +78,18 @@ public class CardService {
         }
         return moneyFrom.get();
     }
+
+    public Money addMoney(String iban, double money, String currency){
+        Optional<Card> card = this.cardRepository.findByIban(iban);
+        if(card.isEmpty()){
+            return new Money();
+        }
+        Currency enumCurrency = Currency.valueOf(currency);
+        Optional<Money> existing = this.moneyRepository.findByCardAndCurrency(card.get(), enumCurrency);
+        if(existing.isPresent()){
+            existing.get().setMoney(existing.get().getMoney() + money);
+            return this.moneyRepository.save(existing.get());
+        }
+        return this.moneyRepository.save(new Money(card.get(), money, enumCurrency));
+    }
 }
