@@ -1,5 +1,4 @@
 package com.example.JavaWEBbff.models;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +25,6 @@ public class CardOwner {
     private Card incomeCard;
 
     @OneToMany(mappedBy = "cardOwner")
-    @JsonIgnore
     private List<Card> cards;
 
     private String username;
