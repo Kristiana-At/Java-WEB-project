@@ -2,10 +2,8 @@ package com.example.JavaWEBbff.controllers;
 
 import com.example.JavaWEBbff.models.Card;
 import com.example.JavaWEBbff.models.Money;
-import com.example.JavaWEBbff.models.resources.CreateCardDto;
+import com.example.JavaWEBbff.models.resources.*;
 import com.example.JavaWEBbff.models.resources.ExchangeMoneyDto;
-import com.example.JavaWEBbff.models.resources.ExchangeMoneyDto;
-import com.example.JavaWEBbff.models.resources.SendMoneyDto;
 import com.example.JavaWEBbff.services.CardService;
 import com.example.JavaWEBbff.services.TransactionService;
 import org.springframework.http.HttpStatus;
@@ -34,16 +32,22 @@ public class CardController {
     }
 
     @PostMapping("/exchange/money")
-    public ResponseEntity<Money> exchangeMoney(@RequestBody ExchangeMoneyDto exchangeMoneyDto){
+    public ResponseEntity<Money> exchangeMoney(@RequestBody ExchangeMoneyDto exchangeMoneyDto) {
         return new ResponseEntity<>(this.cardService.exchangeMoney(exchangeMoneyDto.getIban(),
                 exchangeMoneyDto.getMoney(), exchangeMoneyDto.getCurrencyFrom(),
                 exchangeMoneyDto.getCurrencyTo()), HttpStatus.OK);
     }
 
     @PostMapping("/send/money")
-    public ResponseEntity<Money> sendMoney(@RequestBody SendMoneyDto sendMoneyDto){
+    public ResponseEntity<Money> sendMoney(@RequestBody SendMoneyDto sendMoneyDto) {
         return new ResponseEntity<>(this.transactionService.sendMoney(sendMoneyDto.getIbanFrom(),
                 sendMoneyDto.getIbanTo(), sendMoneyDto.getMoney(),
                 sendMoneyDto.getCurrency(), sendMoneyDto.getNote()), HttpStatus.OK);
+    }
+
+    @PostMapping("/add/money")
+    public ResponseEntity<Money> addMoney(@RequestBody AddMoneyDto addMoneyResource) {
+        return new ResponseEntity<>(this.cardService.addMoney(addMoneyResource.getIban(),
+                addMoneyResource.getMoney(), addMoneyResource.getCurrency()), HttpStatus.OK);
     }
 }
