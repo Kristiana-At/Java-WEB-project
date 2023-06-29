@@ -3,12 +3,16 @@ package com.example.JavaWEBbff.controllers;
 import com.example.JavaWEBbff.models.Card;
 import com.example.JavaWEBbff.models.Money;
 import com.example.JavaWEBbff.models.resources.*;
+import com.example.JavaWEBbff.models.Transaction;
+import com.example.JavaWEBbff.models.resources.CreateCardDto;
 import com.example.JavaWEBbff.models.resources.ExchangeMoneyDto;
 import com.example.JavaWEBbff.services.CardService;
 import com.example.JavaWEBbff.services.TransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/card")
@@ -49,5 +53,10 @@ public class CardController {
     public ResponseEntity<Money> addMoney(@RequestBody AddMoneyDto addMoneyResource) {
         return new ResponseEntity<>(this.cardService.addMoney(addMoneyResource.getIban(),
                 addMoneyResource.getMoney(), addMoneyResource.getCurrency()), HttpStatus.OK);
+    }
+
+    @GetMapping("/transactions")
+    public List<Transaction> showHistory(@RequestParam String iban) {
+     return this.transactionService.getTransactions(iban);
     }
 }

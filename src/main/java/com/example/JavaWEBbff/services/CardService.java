@@ -68,14 +68,18 @@ public class CardService {
         } else {
             moneyFrom.get().setMoney(moneyFrom.get().getMoney() - money);
         }
+
         this.moneyRepository.save(moneyFrom.get());
+
         double moneyToSave = (money * enumCurrencyFrom.getBgnValue()) / enumCurrencyTo.getBgnValue();
+
         if(moneyTo.isPresent()){
             moneyTo.get().setMoney(moneyTo.get().getMoney() + moneyToSave);
             this.moneyRepository.save(moneyTo.get());
         } else{
             this.moneyRepository.save(new Money(card.get(), moneyToSave, enumCurrencyTo));
         }
+
         return moneyFrom.get();
     }
 
