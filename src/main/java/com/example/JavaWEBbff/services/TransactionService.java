@@ -1,5 +1,6 @@
 package com.example.JavaWEBbff.services;
 
+import com.example.JavaWEBbff.exceptions.DigitalWalletException;
 import com.example.JavaWEBbff.exceptions.NotFoundException;
 import com.example.JavaWEBbff.models.Card;
 import com.example.JavaWEBbff.models.Money;
@@ -13,6 +14,7 @@ import com.example.JavaWEBbff.repositories.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,20 +35,20 @@ public class TransactionService {
     public Money sendMoney(String ibanFrom, String ibanTo, double money, String currency, String note) {
         Optional<Card> cardFrom = this.cardRepository.findByIban(ibanFrom);
         if (cardFrom.isEmpty()) {
-            throw new NotFoundException("Owner does not exist");
+            throw new NotFoundException("Card does not exist");
         }
 
         boolean isVisa = cardFrom.get().getCardType() == CardType.VISA;
 
         Optional<Card> cardTo = this.cardRepository.findByIban(ibanTo);
         if (cardTo.isEmpty()) {
-            throw new NotFoundException("Owner does not exist");
+            throw new NotFoundException("Card does not exist");
         }
         Currency enumCurrency = Currency.valueOf(currency);
 
         Optional<Money> moneyFrom = this.moneyRepository.findByCardAndCurrency(cardFrom.get(), enumCurrency);
         if (moneyFrom.isEmpty() || (moneyFrom.get().getMoney() < (money + 0.2))) {
-            throw new NotFoundException("Owner does not exist");
+            throw new DigitalWalletException("Not enough money");
         }
 
         Optional<Money> moneyTo = this.moneyRepository.findByCardAndCurrency(cardTo.get(), enumCurrency);
@@ -67,4 +69,17 @@ public class TransactionService {
         this.moneyRepository.save(moneyFrom.get());
         return moneyFrom.get();
     }
+
+    public List<Transaction> getTransactions(String iban) {
+        Optional<Card> card = this.cardRepository.findByIban(iban);
+        if (card.isEmpty()) {
+            throw new NotFoundException("Card does not exist");
+        }
+
+        List<Transaction> transactions =
+                this.transactionRepository.findAllBySenderOrReceiverOrderByDate(card.get(), card.get());
+
+        return transactions;
+    }
+
 }

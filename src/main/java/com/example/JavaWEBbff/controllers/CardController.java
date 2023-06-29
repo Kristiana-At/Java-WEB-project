@@ -54,4 +54,9 @@ public class CardController {
         return new ResponseEntity<>(this.cardService.addMoney(addMoneyResource.getIban(),
                 addMoneyResource.getMoney(), addMoneyResource.getCurrency()), HttpStatus.OK);
     }
+
+    @GetMapping("/transactions")
+    public List<Transaction> showHistory(@RequestParam String iban) {
+     return this.transactionService.getTransactions(iban);
+    }
 }
