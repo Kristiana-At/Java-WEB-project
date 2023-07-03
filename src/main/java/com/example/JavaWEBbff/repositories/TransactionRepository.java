@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
     Optional<Transaction> findAllBySender(Card sender);
-    List<Transaction> findAllBySenderOrReceiverOrderByDate(Card sender, Card receiver);
+    List<Transaction> findAllBySenderOrReceiverOrderByDateDesc(Card sender, Card receiver);
 }
