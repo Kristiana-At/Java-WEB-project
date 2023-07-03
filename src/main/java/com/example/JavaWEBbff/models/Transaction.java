@@ -20,11 +20,9 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JsonIgnore
     private Card sender;
 
     @ManyToOne
-    @JsonIgnore
     private Card receiver;
 
     private double money;

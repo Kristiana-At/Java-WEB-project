@@ -35,9 +35,11 @@ public class Card {
     List<Money> money;
 
     @OneToMany(mappedBy = "sender")
+    @JsonIgnore
     List<Transaction> sendTrn;
 
     @OneToMany(mappedBy = "receiver")
+    @JsonIgnore
     List<Transaction> receiveTrn;
 
     public Card(CardType cardType, CardOwner cardOwner) {

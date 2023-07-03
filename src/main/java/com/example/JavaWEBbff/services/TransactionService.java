@@ -77,7 +77,7 @@ public class TransactionService {
         }
 
         List<Transaction> transactions =
-                this.transactionRepository.findAllBySenderOrReceiverOrderByDate(card.get(), card.get());
+                this.transactionRepository.findAllBySenderOrReceiverOrderByDateDesc(card.get(), card.get());
 
         return transactions;
     }
